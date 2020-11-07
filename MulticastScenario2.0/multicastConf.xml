@@ -1,0 +1,27 @@
+<config>
+	<interface hosts="hostOnTime[*]" address="10.1.1.x" netmask="255.255.255.x"/>
+	<interface hosts="hostDelayed[*]" address="10.1.2.x" netmask="255.255.255.x"/>
+	<interface hosts="hostAnticipated[*]" address="10.1.3.x" netmask="255.255.255.x"/>
+	<interface hosts="nRouter" address="10.1.4.x" netmask="255.255.255.x"/>
+	<interface hosts="accessPoint" address="10.1.4.x" netmask="255.255.255.x"/>
+	<interface hosts="fogServer" address="84.15.3.x" netmask="255.255.255.x"/>
+	<interface hosts="serverRouter" address="84.15.3.x" netmask="255.255.255.x"/>
+	<interface hosts="backboneRouter" towards="nRouter" address="10.1.4.x" netmask="255.255.255.x"/>
+	<interface hosts="backboneRouter" towards="serverRouter" address="84.15.3.x" netmask="255.255.255.x"/>
+	
+	<multicast-group hosts="hostOnTime[*]" interfaces="eth* wlan* Lo* ethg**" address="224.0.1.0"/>
+	<multicast-group hosts="hostDelayed[*]" interfaces="eth* wlan* Lo* ethg**" address="224.0.1.1"/>
+	<multicast-group hosts="hostAnticipated[*]" interfaces="eth* wlan* Lo* ethg**" address="224.0.1.2"/>
+	
+	<multicast-route hosts="serverRouter" source="*" netmask="*" groups="224.0.1.0" children="*"/>
+	<multicast-route hosts="backboneRouter" source="*" netmask="*" groups="224.0.1.0" children="*"/>
+	<multicast-route hosts="nRouter" source="*" netmask="*" groups="224.0.1.0" children="*"/>
+	
+	<multicast-route hosts="serverRouter" source="*" netmask="*" groups="224.0.1.1" children="*"/>
+	<multicast-route hosts="backboneRouter" source="*" netmask="*" groups="224.0.1.1" children="*"/>
+	<multicast-route hosts="nRouter" source="*" netmask="*" groups="224.0.1.1" children="*"/>
+	
+	<multicast-route hosts="serverRouter" source="*" netmask="*" groups="224.0.1.2" children="*"/>
+	<multicast-route hosts="backboneRouter" source="*" netmask="*" groups="224.0.1.2" children="*"/>
+	<multicast-route hosts="nRouter" source="*" netmask="*" groups="224.0.1.2" children="*"/>
+</config>
